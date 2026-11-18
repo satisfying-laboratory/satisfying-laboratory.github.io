@@ -194,6 +194,7 @@ footer a{margin:0 8px}
       <div class="done" id="done" hidden>
         <h2>You're in, OG.</h2>
         <p>Your founding-member spot is saved: 50% off for life. We'll email you the moment early access opens.</p>
+        <div id="qs">
         <p class="q">What will you use it for? <small>(optional)</small></p>
         <div class="opts" data-k="use">
           <button type="button" aria-pressed="false">TikTok / Reels / Shorts</button>
@@ -220,7 +221,10 @@ footer a{margin:0 8px}
           <button type="button" aria-pressed="false">$10</button>
           <button type="button" aria-pressed="false">$15+</button>
         </div>
-        <p class="fine">Thanks! Your answers help us build the right thing.</p>
+        <button class="btn" type="button" id="qsDone">Send my answers</button>
+        <p class="fine"><a href="#" id="qsSkip">Skip</a></p>
+        </div>
+        <p class="fine" id="qsThanks" hidden>Thanks! Your answers are saved. You can close this page or keep exploring below.</p>
       </div>
     </div>
   </div>
@@ -345,7 +349,7 @@ if ('IntersectionObserver' in window) {
 
 function track(name) {}
 function send(data) {
-  if (!ENDPOINT) return Promise.resolve();           // preview mode
+  if (!ENDPOINT || DEMO) return Promise.resolve();           // preview mode
   return fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
 }
 
@@ -376,6 +380,14 @@ document.querySelectorAll('.opts').forEach(function (g) {
   });
 });
 
+function closeQs(e) {
+  if (e) e.preventDefault();
+  document.getElementById('qs').hidden = true; document.getElementById('qsThanks').hidden = false;
+  document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo(0, 0);
+  document.getElementById('cta2').hidden = true;
+}
+document.getElementById('qsDone').addEventListener('click', closeQs);
+document.getElementById('qsSkip').addEventListener('click', closeQs);
 document.getElementById('cta2').addEventListener('click', function () { setTimeout(function () { form.email.focus({ preventScroll: true }); }, 500); });
 </script>
 </body>
