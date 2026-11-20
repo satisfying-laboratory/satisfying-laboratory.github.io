@@ -170,7 +170,7 @@ footer a{margin:0 8px}
     <div class="card" id="join">
       <form id="form" novalidate>
         <div class="og">
-          <div class="t"><span class="badge">OG</span>300 founding-member spots</div>
+          <div class="t"><span class="badge">OG</span>100 founding-member spots</div>
         </div>
         <div class="spots">
           <div class="bar"><i id="spotBar"></i></div>
@@ -184,7 +184,7 @@ footer a{margin:0 8px}
         <button class="btn" type="submit" id="submit">Claim my OG spot</button>
         <p class="err" id="err" role="alert"></p>
         <ul class="perks">
-          <li><b>50% off for life</b>, for the first 300 only</li>
+          <li><b>50% off for life</b>, for the first 100 only</li>
           <li><b>Early access</b> before the public launch</li>
           <li><b>Your vote</b> on the next themes we build</li>
         </ul>
@@ -300,7 +300,7 @@ var ENDPOINT = "https://script.google.com/macros/s/AKfycbzNp1B7Foxu_9WDm4WdPdDvc
 })();
 
 /* live count of founding spots left (real number from the list) */
-var SPOTS = 300, lastCount = null, toastT;
+var SPOTS = 100, lastCount = null, toastT;
 function toast(msg) {
   var t = document.getElementById('toast'); document.getElementById('toastTxt').innerHTML = msg;
   t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('on'); }, 5000);
@@ -354,7 +354,7 @@ function send(data) {
 }
 
 loadSpots();
-if (!DEMO) send({ action: 'visit' });   // anonymous page-view counter (no cookie, no personal data)
+if (!DEMO && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) send({ action: 'visit' });   // anonymous page-view counter (no cookie, no personal data)
 var form = document.getElementById('form'), err = document.getElementById('err'), done = document.getElementById('done');
 var sid = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
 var src = new URLSearchParams(location.search).get('src') || (document.referrer ? new URL(document.referrer).hostname : 'direct');
